@@ -14,50 +14,35 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <style>
  .input-group{
- width: 100% !important;
+ width: 25% !important;
  }
  .input-group-addon{
  width: 15% !important;
  }
 </style>
 </head>
+
 <body>
-<% 
-if(session.getAttribute("user") == null)
-{
-	response.sendRedirect("login.jsp");
-}
-%>
 	<div class="container">
-		<h1>New Candidate</h1>
+		<h1>Enter Login Details</h1>
 		
 		<p>&nbsp;</p>
-		<a href="/SendVotingDetailsServlet">Send Voting Details to Students</a>
 		
-		<form role="form" action="/AddCandidateServlet" method="post">
+		<form role="form" action="/LoginServlet" method="post">
 			<div class="form-group">
 				<div class="input-group">
-					<span class="input-group-addon">First Name</span>
-					<input name="div_firstName" type="text" class="form-control" required>
+					<span class="input-group-addon">Username: </span>
+					<input name="div_username" type="text" class="form-control" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<span class="input-group-addon">Last Name</span>
-					<input name="div_lastName" type="text" class="form-control" required>
+					<span class="input-group-addon">Password: </span>
+					<input name="div_password" type="password" class="form-control" required>
 				</div>
 			</div>
-			<div class="form-group">
-				<div class="input-group">
-					<span class="input-group-addon">Faculty</span>
-					<input name="div_faculty" type="text" class="form-control" required>
-				</div>
-			</div>
-			<button type="submit" class="btn btn-success" style="width:15%">Add Candidate</button>
-		</form>	
-		<form role="form" action="/LogoutServlet" method="post">
-			<button type="submit" class="btn btn-success" style="width:15%">Logout</button>
-		</form>			
+			<button type="submit" class="btn btn-success" style="width:15%">Submit</button>
+		</form>				
 	</div>	
 </body>
 </html>

@@ -3,6 +3,7 @@ package de.uniba.wiai.lspi.demo.votingSystem.Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -55,6 +56,7 @@ public class SendVotingDetailsServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		VoterDao voterDao = new VoterDao();
 		List<Voter> voterList = voterDao.getVoters();
+		out.println(voterList);
 		for(Voter voterObj: voterList)
 		{
 		

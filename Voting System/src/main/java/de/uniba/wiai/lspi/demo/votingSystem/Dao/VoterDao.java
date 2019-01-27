@@ -65,23 +65,16 @@ public class VoterDao {
 	public List<Voter> getVoters()
 	{
 		Query q = new Query("Voter");
-		log.info("inside getVoters");
 		PreparedQuery pq = datastore.prepare(q);
-		log.info("inside getVoters2");
 		List<Entity> entityList = pq.asList(FetchOptions.Builder.withLimit(5));
-		log.info("inside getVoters3");
 		List<Voter> voterList =  new ArrayList<Voter>();
-		log.info("inside getVoters4");
-		Voter voterObj = new Voter();
-		log.info("inside getVoters5");
 		for(Entity entity: entityList)
 		{
-			log.info("inside getVoters6");
+			Voter voterObj = new Voter();
 			voterObj.setFirstName(entity.getProperty("firstName").toString());
 			voterObj.setLastName(entity.getProperty("lastName").toString());
 			voterObj.setEmailId(entity.getProperty("emailId").toString());
 			voterList.add(voterObj);
-			log.info("inside getVoters8"+ voterList);
 		}
 		
 		return voterList;
