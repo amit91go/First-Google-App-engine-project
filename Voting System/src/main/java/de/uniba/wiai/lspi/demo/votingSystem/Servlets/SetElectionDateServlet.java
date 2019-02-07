@@ -3,6 +3,7 @@ package de.uniba.wiai.lspi.demo.votingSystem.Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,9 @@ public class SetElectionDateServlet extends HttpServlet {
 		electionObj.setEndTime(request.getParameter("div_endTime"));
 		
 		ElectionDao electionDao = new ElectionDao();
-		out.println(electionDao.setElectionDetails(electionObj));
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+		out.println("<font color=green>Election Date/Time set successfully.</font>");
+		rd.include(request, response);
 	}
 
 }

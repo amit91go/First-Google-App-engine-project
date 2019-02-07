@@ -19,11 +19,23 @@
  .input-group-addon{
  width: 15% !important;
  }
+ .logoutLblPos{
+   position:fixed;
+   right:100px;
+   top:35px;
+ }
 </style>
 </head>
 <body>
+<% 
+if(session.getAttribute("user") == null)
+{
+	response.sendRedirect("login.jsp");
+}
+%>
 	<div class="container">
-		<h1>Set Election Date</h1>
+		<p>&nbsp;</p>
+		<h2>Set Election Date/Time</h2>
 		<p>&nbsp;</p>
 				<form role="form" action="/SetElectionDateServlet" method="post">
 			<div class="form-group">
@@ -45,6 +57,11 @@
 				</div>
 			</div>			
 			<button type="submit" class="btn btn-success" style="width:15%">Submit</button>
+		</form>	
+		<form align="right" name="form1" method="post" action="/LogoutServlet">
+  			<label class="logoutLblPos">
+  			<input name="submit2" type="submit" id="submit2" value="Log Out">
+  			</label>
 		</form>				
 	</div>
 </body>

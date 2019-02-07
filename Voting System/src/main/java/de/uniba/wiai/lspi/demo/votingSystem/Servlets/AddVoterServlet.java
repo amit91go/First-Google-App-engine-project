@@ -45,8 +45,8 @@ public class AddVoterServlet extends HttpServlet {
 		//doGet(request, response);
 		PrintWriter out = response.getWriter();
 		Voter voterObj = new Voter();
-		voterObj.setFirstName(request.getParameter("div_firstName"));
-		voterObj.setLastName(request.getParameter("div_lastName"));
+		/*voterObj.setFirstName(request.getParameter("div_firstName"));
+		voterObj.setLastName(request.getParameter("div_lastName"));*/
 		voterObj.setEmailId(request.getParameter("div_emailId"));
 		
 		VoterDao voterDao = new VoterDao();

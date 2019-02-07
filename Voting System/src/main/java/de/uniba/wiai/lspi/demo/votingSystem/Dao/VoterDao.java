@@ -34,8 +34,8 @@ public class VoterDao {
 	public Entity addVoter(Voter voterObj)
 	{
 		Entity voter = new Entity("Voter");
-		voter.setProperty("firstName", voterObj.getFirstName());
-		voter.setProperty("lastName", voterObj.getLastName());
+		/*voter.setProperty("firstName", voterObj.getFirstName());
+		voter.setProperty("lastName", voterObj.getLastName());*/
 		voter.setProperty("emailId", voterObj.getEmailId());
 		datastore.put(voter);
 		return voter;
@@ -50,7 +50,7 @@ public class VoterDao {
 		
 	}
 	
-	public Entity updateToken(Key voterKey,Voter voterObj)
+	/*public Entity updateToken(Key voterKey,Voter voterObj)
 	{
 		Entity voter = new Entity(voterKey);
 		voter.setProperty("firstName", voterObj.getFirstName());
@@ -60,7 +60,7 @@ public class VoterDao {
 		voter.setProperty("votingStatus", voterObj.getVotingStatus());
 		datastore.put(voter);
 		return voter;
-	}
+	}*/
 	
 	public List<Voter> getVoters()
 	{
@@ -71,8 +71,8 @@ public class VoterDao {
 		for(Entity entity: entityList)
 		{
 			Voter voterObj = new Voter();
-			voterObj.setFirstName(entity.getProperty("firstName").toString());
-			voterObj.setLastName(entity.getProperty("lastName").toString());
+			/*voterObj.setFirstName(entity.getProperty("firstName").toString());
+			voterObj.setLastName(entity.getProperty("lastName").toString());*/
 			voterObj.setEmailId(entity.getProperty("emailId").toString());
 			voterList.add(voterObj);
 		}

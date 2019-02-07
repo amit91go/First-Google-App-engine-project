@@ -24,8 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.datastore.Key;
 
 import de.uniba.wiai.lspi.demo.votingSystem.Dao.ElectionDao;
+import de.uniba.wiai.lspi.demo.votingSystem.Dao.TokenDao;
 import de.uniba.wiai.lspi.demo.votingSystem.Dao.VoterDao;
 import de.uniba.wiai.lspi.demo.votingSystem.Objects.Election;
+import de.uniba.wiai.lspi.demo.votingSystem.Objects.Token;
 import de.uniba.wiai.lspi.demo.votingSystem.Objects.Voter;
 
 /**
@@ -60,7 +62,10 @@ public class SendElectionReminderServlet extends HttpServlet {
 					PrintWriter out = response.getWriter();
 					out.print("hello");
 					VoterDao voterDao = new VoterDao();
+					TokenDao tokenDao = new TokenDao();
+					Token tokenObj = new Token();
 					List<Voter> voterList = voterDao.getVoters();
+					Key voterKey;
 					for(Voter voterObj: voterList)
 					{
 
@@ -78,12 +83,13 @@ public class SendElectionReminderServlet extends HttpServlet {
 						try {
 							Message msg = new MimeMessage(session);
 							msg.setFrom(new InternetAddress("amit91go@gmail.com", "Amit Admin"));
-							msg.addRecipient(Message.RecipientType.TO,new InternetAddress(voterObj.getEmailId(), voterObj.getFirstName()+" "+voterObj.getLastName()));
+							msg.addRecipient(Message.RecipientType.TO,new InternetAddress(voterObj.getEmailId(), "Mr. Student"));
 							msg.setSubject("Sample University Elections Details");
-							msg.setText("Dear Mr. "+voterObj.getLastName()+",\nYour university election deatils are as follows:\n	Election Date: "+
+							msg.setText("Dear Student"+",\nYour university election details are as follows:\n	Election Date: "+
 									electionObj.getElectionDate()+"\n	Start Time: "+
 									electionObj.getStartTime()+" Hrs\n	End Time: "+electionObj.getEndTime()+" Hrs\n"+
-									"Your one time token for voting: "+ token);
+									"Your one time token for voting: "+ token+"\n\n"+
+									"Best Regards,\nUniversity Election Authority");
 							Transport.send(msg);
 						} catch (AddressException e) {
 							e.printStackTrace();
@@ -92,10 +98,10 @@ public class SendElectionReminderServlet extends HttpServlet {
 						} catch (UnsupportedEncodingException e) {
 							e.printStackTrace();
 						}
-						voterObj.setToken(token);
-						voterObj.setVotingStatus(1);
-						Key voterKey = voterDao.retrieveKey(voterObj.getEmailId());
-						voterDao.updateToken(voterKey, voterObj);
+						tokenObj.setTokenid(token);
+						tokenObj.setVotingStatus(1);
+						voterKey = voterDao.retrieveKey(voterObj.getEmailId());
+						tokenDao.addToken(tokenObj ,voterKey);
 
 					}
 				}

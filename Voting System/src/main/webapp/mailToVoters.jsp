@@ -14,7 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <style>
  .input-group{
- width: 100% !important;
+ width: 25% !important;
  }
  .input-group-addon{
  width: 15% !important;
@@ -27,6 +27,7 @@
 </style>
 </head>
 <body>
+
 <% 
 if(session.getAttribute("user") == null)
 {
@@ -35,14 +36,19 @@ if(session.getAttribute("user") == null)
 %>
 	<div class="container">
 		<p>&nbsp;</p>
-		<h2>Admin Menu</h2>
-		<p>&nbsp;</p>
-		<a href="electionDate.jsp">Set Election Date/time</a>		
-		<p>&nbsp;</p>
-		<a href="mailToVoters.jsp">Send Voting Details to Students</a>
-		<p>&nbsp;</p>
-		<a href="addCandidate.jsp">Add Candidates</a>
+		<h2>Send Voting Details</h2>
 		
+		<p>&nbsp;</p>
+		<form role="form" action="/SendVotingDetailsServlet" method="post">
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">Voter's Mail Ids</span>
+					<textarea rows="4" cols="15" name="div_mailIds" class ="form-control" required></textarea>
+				</div>
+				<font color=red>Please separate the mail ids with ";" (semicolon).</font>
+			</div>
+			<button type="submit" class="btn btn-success" style="width:15%">Send Mail</button>
+		</form>	
 		<form align="right" name="form1" method="post" action="/LogoutServlet">
   			<label class="logoutLblPos">
   			<input name="submit2" type="submit" id="submit2" value="Log Out">

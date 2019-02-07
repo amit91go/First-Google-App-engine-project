@@ -3,6 +3,7 @@ package de.uniba.wiai.lspi.demo.votingSystem.Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,7 +49,11 @@ public class AddCandidateServlet extends HttpServlet {
 		candidateObj.setFaculty(request.getParameter("div_faculty"));
 		
 		CandidateDao candidateDao = new CandidateDao();
-		out.println(candidateDao.addCandidate(candidateObj));		
+		candidateDao.addCandidate(candidateObj);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+		out.println("<font color=green>Candidate added successfully.</font>");
+		rd.include(request, response);
+		
 		
 	}
 
