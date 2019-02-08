@@ -81,16 +81,33 @@ public class SendVotingDetailsServlet extends HttpServlet {
 		Voter voterObj = new Voter();
 		Token tokenObj = new Token();
 		Key voterKey;
+		Key parentKey;
+		int status = 0;
 		
 		for(String mailId: mailList)
 		{
 		
-			Random random = new Random();
-			StringBuilder builder = new StringBuilder(6);
-			for (int i = 0; i < 6; i++) {
-				builder.append(ALPHABET.charAt(random.nextInt(ALPHABET.length())));
+			
+			if((parentKey = voterDao.retrieveKey(mailId)) != null)
+			{
+				status = 1;
 			}
-			String token =  builder.toString();
+			
+			String token;
+			if(status != 1)
+			{
+				Random random = new Random();
+				StringBuilder builder = new StringBuilder(6);
+				for (int i = 0; i < 6; i++) 
+				{
+					builder.append(ALPHABET.charAt(random.nextInt(ALPHABET.length())));
+				}
+				token =  builder.toString();
+			}
+			else
+			{
+				token =  tokenDao.getToken(parentKey).getTokenid();
+			}
 		
 			Properties props = new Properties();
 			Session session = Session.getDefaultInstance(props, null);
@@ -115,18 +132,21 @@ public class SendVotingDetailsServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			
-			voterObj.setEmailId(mailId);
-			voterDao.addVoter(voterObj);
-			tokenObj.setTokenid(token);
-			tokenObj.setVotingStatus(1);
-			voterKey = voterDao.retrieveKey(mailId);
-			tokenDao.addToken(tokenObj ,voterKey);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-			out.println("<font color=green>Voting Details sent successfully.</font>");
-			rd.include(request, response);
+			if(status != 1)
+			{
+				voterObj.setEmailId(mailId);
+				voterDao.addVoter(voterObj);
+				tokenObj.setTokenid(token);
+				tokenObj.setVotingStatus(1);
+				voterKey = voterDao.retrieveKey(mailId);
+				tokenDao.addToken(tokenObj ,voterKey);
+			}
+
 		}
 		
-
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+		out.println("<font color=green>Voting Details sent successfully.</font>");
+		rd.include(request, response);
 		
 	}
 

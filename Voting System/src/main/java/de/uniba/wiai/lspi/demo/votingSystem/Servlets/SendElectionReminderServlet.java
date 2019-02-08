@@ -36,7 +36,6 @@ import de.uniba.wiai.lspi.demo.votingSystem.Objects.Voter;
 @WebServlet("/SendElectionReminderServlet")
 public class SendElectionReminderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -68,13 +67,10 @@ public class SendElectionReminderServlet extends HttpServlet {
 					Key voterKey;
 					for(Voter voterObj: voterList)
 					{
-
-						Random random = new Random();
-						StringBuilder builder = new StringBuilder(6);
-						for (int i = 0; i < 6; i++) {
-							builder.append(ALPHABET.charAt(random.nextInt(ALPHABET.length())));
-						}
-						String token =  builder.toString();
+						voterKey = voterDao.retrieveKey(voterObj.getEmailId());
+						tokenObj = tokenDao.getToken(voterKey);
+						
+						String token =  tokenObj.getTokenid();
 
 						Properties props = new Properties();
 						Session session = Session.getDefaultInstance(props, null);
@@ -98,10 +94,6 @@ public class SendElectionReminderServlet extends HttpServlet {
 						} catch (UnsupportedEncodingException e) {
 							e.printStackTrace();
 						}
-						tokenObj.setTokenid(token);
-						tokenObj.setVotingStatus(1);
-						voterKey = voterDao.retrieveKey(voterObj.getEmailId());
-						tokenDao.addToken(tokenObj ,voterKey);
 
 					}
 				}

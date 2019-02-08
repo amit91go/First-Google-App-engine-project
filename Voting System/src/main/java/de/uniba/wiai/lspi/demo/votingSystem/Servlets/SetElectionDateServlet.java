@@ -52,6 +52,7 @@ public class SetElectionDateServlet extends HttpServlet {
 		electionObj.setEndTime(request.getParameter("div_endTime"));
 		
 		ElectionDao electionDao = new ElectionDao();
+		electionDao.setElectionDetails(electionObj);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
 		out.println("<font color=green>Election Date/Time set successfully.</font>");
 		rd.include(request, response);

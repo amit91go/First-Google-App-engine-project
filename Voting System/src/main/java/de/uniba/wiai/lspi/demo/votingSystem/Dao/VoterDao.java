@@ -45,8 +45,15 @@ public class VoterDao {
 	{
 		Query q = new Query("Voter").setFilter(new FilterPredicate("emailId", FilterOperator.EQUAL, emailId));
 		PreparedQuery pq = datastore.prepare(q);
+		if(pq.asSingleEntity() != null)
+		{
 		Entity result = pq.asSingleEntity();
 		return result.getKey();
+		}
+		else
+		{
+			return null;
+		}
 		
 	}
 	
