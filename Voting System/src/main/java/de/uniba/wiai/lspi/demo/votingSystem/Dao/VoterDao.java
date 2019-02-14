@@ -85,6 +85,12 @@ public class VoterDao {
 		}
 		
 		return voterList;
-		
+	}
+	
+	public int GetVoterListCount()
+	{
+		Query q = new Query("Voter");
+		List<Entity> pq = datastore.prepare(q).asList(FetchOptions.Builder.withDefaults());
+		return pq.size();
 	}
 }

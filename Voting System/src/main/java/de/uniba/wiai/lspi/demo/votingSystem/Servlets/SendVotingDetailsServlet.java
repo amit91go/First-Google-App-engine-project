@@ -121,7 +121,8 @@ public class SendVotingDetailsServlet extends HttpServlet {
 				msg.setText("Dear Student"+",\nYour university election details are as follows:\n	Election Date: "+
 						electionObj.getElectionDate()+"\n	Start Time: "+
 						electionObj.getStartTime()+" Hrs\n	End Time: "+electionObj.getEndTime()+" Hrs\n"+
-						"Your one time token for voting: "+ token+"\n\n"+
+						"Your one time token for voting: "+ token+"\n"+
+						"Click here for voting ballot " +"https://"+ request.getServerName() + "/vote?emailId=" + mailId+"\n\n"+
 						"Best Regards,\nUniversity Election Authority");
 				Transport.send(msg);
 				} catch (AddressException e) {
